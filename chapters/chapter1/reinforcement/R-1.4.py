@@ -1,6 +1,6 @@
 def sum_of_squares_until_n(n):
     count = 0
-    for k in range(n):
+    for k in range(1, n):
         count += k * k
     return count
 
