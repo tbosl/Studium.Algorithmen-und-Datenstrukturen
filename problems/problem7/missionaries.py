@@ -28,41 +28,28 @@ def successors():  # capacities of how large the glasses can be
         o, d, boat_position = state
         succs = {}
         if boat_position == 'o':
-            # if o[0] > 0 and o[1] > 0 and d[0] + 1 <= d[1] + 1:
             succs[((o[0] - 1, o[1] - 1), (d[0] + 1, d[1] + 1), 'd')] = "1 cannibal -> d; 1 missionary -> d"
-            # if o[0] > 0 and (d[0] + 1 <= d[1] or d[1] == 0) and d[0] + 1 + d[1] > 1:
             succs[((o[0] - 1, o[1]), (d[0] + 1, d[1]), 'd')] = "1 cannibal -> d; 0 missionary -> d"
-            # if o[0] > 1 and (d[0] + 2 <= d[1] or d[1] == 0):
             succs[((o[0] - 2, o[1]), (d[0] + 2, d[1]), 'd')] = "2 cannibal -> d; 0 missionary -> d"
-            # if o[1] > 0 and (o[1] - 1 >= o[0] or o[1] - 1 == 0) and d[0] + d[1] + 1 > 1 and d[0] <= d[1] + 1:
             succs[((o[0], o[1] - 1), (d[0], d[1] + 1), 'd')] = "0 cannibal -> d; 1 missionary -> d"
-            # if o[1] > 1 and (o[1] - 2 >= o[0] or o[1] - 2 == 0) and d[0] <= d[1] + 2:
             succs[((o[0], o[1] - 2), (d[0], d[1] + 2), 'd')] = "0 cannibal -> d; 2 missionary -> d"
-
         elif boat_position == 'd':
-            # if d[0] > 0 and d[1] > 0 and o[0] + 1 <= o[1] + 1:
             succs[((o[0] + 1, o[1] + 1), (d[0] - 1, d[1] - 1), 'o')] = "1 cannibal -> o; 1 missionary -> o"
-            # if d[0] > 0 and (o[0] + 1 <= o[1] or o[1] == 0) and o[0] + 1 + o[1] > 1:
             succs[((o[0] + 1, o[1]), (d[0] - 1, d[1]), 'o')] = "1 cannibal -> o; 0 missionary -> o"
-            # if d[0] > 1 and (o[0] + 2 <= o[1] or o[1] == 0):
             succs[((o[0] + 2, o[1]), (d[0] - 2, d[1]), 'o')] = "2 cannibal -> o; 0 missionary -> o"
-            # if d[1] > 0 and (d[1] - 1 >= d[0] or d[1] - 1 == 0) and o[0] + o[1] + 1 > 1 and o[0] <= o[1] + 1:
             succs[((o[0], o[1] + 1), (d[0], d[1] - 1), 'o')] = "0 cannibal -> o; 1 missionary -> o"
-            # if d[1] > 1 and (d[1] - 2 >= d[0] or d[1] - 2 == 0) and d[0] <= d[1] + 2:
             succs[((o[0], o[1] + 2), (d[0], d[1] - 2), 'o')] = "0 cannibal -> o; 2 missionary -> o"
-        invalid = []
-        for (state, action) in succs.items():
+
+        for state in list(succs.keys()):
             if not __is_valid_state(state):
-                invalid.append(state)
-        for state in invalid:
-            del succs[state]
+                del succs[state]
         return succs
 
     return sc
 
 
 def __is_valid_state(state):
-    o, d, _ = state
+    o, d, _ö = state
     return (o[0] <= o[1] or o[1] == 0) and (d[0] <= d[1] or d[1] == 0) and d[0] >= 0 and d[1] >= 0 and o[0] >= 0 and o[
         1] >= 0
 
