@@ -36,14 +36,17 @@ class MyArray:
     def insert(self, k, v):
         if k < 0:
             raise IndexError('invalid index')
-        if self._capacity <= k:
+        if self._capacity <= self._n + 1:
             self._resize(2 * self._capacity)
-        for i in range(self._n - 1, k + 1, -1):
+        for i in range(self._n, k - 1, -1):
             print(i)
-            self._A[i] = self._A[i - 1]
-        if self._n < k + 1:
-            self._n = k + 1
+            try:
+                self._A[i] = self._A[i - 1]
+            except ValueError:
+                self._A[i] = ctypes.py_object()
+                print(f"item {i} was NULL")
         self._A[k] = v
+        self._n += 1
 
     def remove(self, k):
         if not 0 <= k < self._n:
@@ -90,4 +93,5 @@ print(a[0])
 a[10] = 10
 print_array(a)
 a.insert(5, 5)
+a.insert(4, 4)
 print_array(a)
