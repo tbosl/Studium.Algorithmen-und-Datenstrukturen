@@ -4,5 +4,5 @@ def power(x, n):
     return x * power(x, n - 1)
 
 
-print(power(2, 100))
+print(power(2, 900))
 # complexity: O(n)
