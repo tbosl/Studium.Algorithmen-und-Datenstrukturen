@@ -6,17 +6,16 @@ class MyArray:
     def __init__(self):
         self._n = 0
         self._capacity = 1
-
         self._A = self._make_array(self._capacity)
 
     def __len__(self):
         return self._n
 
     def __getitem__(self, k):
-        if abs(k) >= self._n:
-            raise IndexError('invalid index')
         if k < 0:
-            k = self._n + k
+            k += self._n
+        if not 0 <= k < self._n:
+            raise IndexError('invalid index')
         return self._A[k]
 
     def append(self, obj):
@@ -27,11 +26,11 @@ class MyArray:
         self._n += 1
 
     def _resize(self, c):
-        B = self._make_array(c)
+        b = self._make_array(c)
 
         for k in range(self._n):
-            B[k] = self._A[k]
-        self._A = B
+            b[k] = self._A[k]
+        self._A = b
         self._capacity = c
 
     def _make_array(self, c):
@@ -51,8 +50,10 @@ def print_array(a):
 
 a = MyArray()
 print(len(a))
+a.append(10)
 a.append(5)
-a.append(6)
-a.append(7)
-a.append(8)
+a.append(3)
+print(a[0])
 print(a[-1])
+print_array(a)
+print_array(a)
