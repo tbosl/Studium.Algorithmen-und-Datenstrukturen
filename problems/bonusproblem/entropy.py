@@ -1,10 +1,6 @@
 import math
 
 
-def plurality_val(examples):
-    pass
-
-
 def entropy(attribute, examples, value):
     goal_ratio = p_goal_with_attribute(attribute, examples, value)
     return B(goal_ratio)
@@ -14,7 +10,7 @@ def p_goal_with_attribute(attribute, examples, value):
     matches = [e for e in examples if e.attributes[attribute] == value]
     positives = 0
     for m in matches:
-        if m.decision is True or m.decision == 1:
+        if m.decision is True or m.decision == 1 or m.decision == "T":
             positives += 1
     return positives / len(matches)
 
@@ -43,13 +39,13 @@ def goal_possibilities(A, examples):
     for e in examples:
         if A in e.attributes:
             count += 1
-            if e.decision is True or e.decision == 1:
+            if e.decision is True or e.decision == 1 or e.decision == "T":
                 count_pos += 1
     return count_pos / count
 
 
 def B(ratio):
-    if (ratio == 1 or ratio == 0):
+    if ratio == 1 or ratio == 0:
         return 0
     return -(ratio * math.log2(ratio) + (1 - ratio) * math.log2(1 - ratio))
 

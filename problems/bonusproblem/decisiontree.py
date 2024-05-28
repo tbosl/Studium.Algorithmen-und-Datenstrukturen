@@ -1,44 +1,9 @@
-from problems.bonusproblem.entropy import plurality_val, most_important_attribute, unique_values
+from random import random
 
-
-class DataItem:
-    def __init__(self, decision, attributes):
-        self.decision = decision
-        self.attributes = attributes
-
-    def __repr__(self):
-        return f"{self.decision} | {self.attributes}"
-
-
-class Dataset:
-    def __init__(self):
-        self.items = [
-            DataItem(True, {"v": 0, "d": "< 10", "a": 0}),
-            DataItem(False, {"v": 0, "d": "< 10", "a": 1}),
-            DataItem(False, {"v": 0, "d": "10 - 20", "a": 0}),
-            DataItem(False, {"v": 0, "d": "10 - 20", "a": 1}),
-            DataItem(False, {"v": 0, "d": "> 20", "a": 0}),
-            DataItem(False, {"v": 0, "d": "> 20", "a": 1}),
-            DataItem(True, {"v": 1, "d": "< 10", "a": 0}),
-            DataItem(True, {"v": 1, "d": "< 10", "a": 1}),
-            DataItem(True, {"v": 1, "d": "10 - 20", "a": 0}),
-            DataItem(True, {"v": 1, "d": "10 - 20", "a": 1}),
-            DataItem(False, {"v": 1, "d": "> 20", "a": 0}),
-            DataItem(False, {"v": 1, "d": "> 20", "a": 1})
-        ]
-
-    def get_attributes(self):
-        return [key for key in self.items[0].attributes]
-
-
-class Node:
-    def __init__(self, data, reason):
-        self.children = []
-        self.data = data
-        self.reason = reason  # will be key + value of the attribute (e. g. v : 0) -> text in tree
-
-    def insert(self, subtree):
-        self.children.append(subtree)
+from problems.bonusproblem.DataModel import Dataset
+from problems.bonusproblem.Node import Node
+from problems.bonusproblem.entropy import most_important_attribute, unique_values
+from problems.bonusproblem.treeplot import TreePlot
 
 
 def dt_learning(examples: list, attributes, parent_examples, start=False):
@@ -52,7 +17,7 @@ def dt_learning(examples: list, attributes, parent_examples, start=False):
     else:
         A = most_important_attribute(examples, attributes)[0]
         reason = A if not start else "root"
-        tree = Node(A, reason)
+        my_tree = Node(A, reason)
         values = []
         for e in examples:
             values.append(e.attributes[A])
@@ -62,10 +27,24 @@ def dt_learning(examples: list, attributes, parent_examples, start=False):
             subtree = dt_learning(exs, [a for a in attributes if a != A], examples)
             if subtree:
                 subtree.reason = f"{A}: {v}"
-            tree.insert(subtree)
-    return tree
+            my_tree.insert(subtree)
+    return my_tree
 
 
-ds = Dataset()
+def plurality_val(examples):
+    true_count = 0
+    for e in examples:
+        if e.decision is True or e.decision == 1:
+            true_count += 1
+    if true_count == len(examples) / 2:
+        decision = random.Random().randint(0, 1)
+    else:
+        decision = 1 if true_count > len(examples / 2) else 0
+    return Node(decision, "")
+
+
+ds = Dataset(filepath="tables/attack.csv", decision="Attack")
 tree = dt_learning(ds.items, ds.get_attributes(), ds.items, True)
+tree.sort()
 print(tree)
+TreePlot().plot(tree, goal=ds.decision)
