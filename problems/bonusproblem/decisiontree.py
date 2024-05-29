@@ -43,7 +43,7 @@ def plurality_val(examples):
     return Node(decision, "")
 
 
-ds = Dataset(filepath="tables/attack.csv", decision="Attack")
+ds = Dataset(filepath="tables/restaurant.csv", decision="WillWait")
 tree = dt_learning(ds.items, ds.get_attributes(), ds.items, True)
 tree.sort()
 print(tree)

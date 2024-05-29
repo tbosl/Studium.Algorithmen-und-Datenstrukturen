@@ -1,5 +1,7 @@
 import math
 
+positive_results = [True, 1, "T"]
+
 
 def entropy(attribute, examples, value):
     goal_ratio = p_goal_with_attribute(attribute, examples, value)
@@ -10,7 +12,7 @@ def p_goal_with_attribute(attribute, examples, value):
     matches = [e for e in examples if e.attributes[attribute] == value]
     positives = 0
     for m in matches:
-        if m.decision is True or m.decision == 1 or m.decision == "T":
+        if m.decision in positive_results:
             positives += 1
     return positives / len(matches)
 
@@ -39,7 +41,7 @@ def goal_possibilities(A, examples):
     for e in examples:
         if A in e.attributes:
             count += 1
-            if e.decision is True or e.decision == 1 or e.decision == "T":
+            if e.decision in positive_results:
                 count_pos += 1
     return count_pos / count
 
