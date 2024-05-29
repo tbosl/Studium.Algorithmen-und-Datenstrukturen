@@ -1,4 +1,4 @@
-from random import random
+from random import Random
 
 from problems.bonusproblem.DataModel import Dataset, check_if_all_examples_have_same_classification
 from problems.bonusproblem.Node import Node
@@ -12,7 +12,7 @@ def plurality_val(examples):
         if e.classification in positive_results:
             true_count += 1
     if true_count == len(examples) / 2:
-        decision = random.Random().randint(0, 1)
+        decision = Random().randint(0, 1)
     else:
         decision = 1 if true_count > len(examples / 2) else 0
     return Node(decision, "")
