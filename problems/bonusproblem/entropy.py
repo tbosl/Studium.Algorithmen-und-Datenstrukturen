@@ -1,6 +1,6 @@
 import math
 
-positive_results = [True, 1, "T"]
+positive_results = [True, 1, "T", "True", "t", "true", "TRUE"]
 
 
 def entropy(attribute, examples, value):

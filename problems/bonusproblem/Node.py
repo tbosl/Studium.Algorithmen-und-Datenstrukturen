@@ -2,25 +2,22 @@ class Node:
     def __init__(self, data, reason):
         self.children = []
         self.data = data
-        self.reason = reason  # will be key + value of the attribute (e. g. v : 0) -> text in tree
+        self.reason = reason
 
     def insert(self, subtree):
         self.children.append(subtree)
 
     @staticmethod
-    def sort_attributes(atc):
-        ordered = {}
-        for k in sorted(atc.keys()):
-            ordered[k] = atc[k]
-        return ordered
+    def __sort_by_keys(atc):
+        return {k: atc[k] for k in sorted((atc.keys()))}
+
+    def __value_from_reason(self):
+        return self.reason[self.reason.index(":") + 1:].strip()
 
     def sort(self):
-        attributes_to_children = {}
-        for c in self.children:
-            attributes_to_children[c.reason[c.reason.index(":") + 1:].strip()] = c
-        ordered_attributes = self.sort_attributes(attributes_to_children)
-        ordered_children = [ordered_attributes[x] for x in ordered_attributes]
-        self.children = ordered_children
+        values_to_children = {c.__value_from_reason(): c for c in self.children}
+        ordered_values = self.__sort_by_keys(values_to_children)
+        self.children = list(ordered_values.values())
         for child in self.children:
             child.sort()
 

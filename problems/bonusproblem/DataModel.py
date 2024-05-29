@@ -16,10 +16,8 @@ class DataItem:
 
 class Dataset:
     def __init__(self, filepath, decision):
-        self.items = []
+        self.items = [DataItem(classification=item[0], attributes=item[1]) for item in read_csv_table(filepath, decision)]
         self.decision = decision
-        for item in read_csv_table(filepath, decision):
-            self.items.append(DataItem(item[0], item[1]))
 
     def get_attributes(self):
         return [key for key in self.items[0].attributes]
