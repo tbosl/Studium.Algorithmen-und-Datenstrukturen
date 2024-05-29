@@ -1,17 +1,28 @@
 from random import random
 
-from problems.bonusproblem.DataModel import Dataset
+from problems.bonusproblem.DataModel import Dataset, check_if_all_examples_have_same_classification
 from problems.bonusproblem.Node import Node
-from problems.bonusproblem.entropy import most_important_attribute, unique_values
+from problems.bonusproblem.entropy import most_important_attribute, unique_values, positive_results
 from problems.bonusproblem.treeplot import TreePlot
 
 
+def plurality_val(examples):
+    true_count = 0
+    for e in examples:
+        if e.classification in positive_results:
+            true_count += 1
+    if true_count == len(examples) / 2:
+        decision = random.Random().randint(0, 1)
+    else:
+        decision = 1 if true_count > len(examples / 2) else 0
+    return Node(decision, "")
+
+
 def dt_learning(examples: list, attributes, parent_examples, start=False):
-    examples_with_other_classification = [e for e in examples if e.decision != examples[0].decision]
     if not examples:
         return plurality_val(parent_examples)
-    elif len(examples_with_other_classification) == 0:
-        return Node(examples[0].decision, "")
+    elif check_if_all_examples_have_same_classification(examples):
+        return Node(examples[0].classification, "")
     elif not attributes:
         return plurality_val(examples)
     else:
@@ -31,20 +42,7 @@ def dt_learning(examples: list, attributes, parent_examples, start=False):
     return my_tree
 
 
-def plurality_val(examples):
-    true_count = 0
-    for e in examples:
-        if e.decision is True or e.decision == 1:
-            true_count += 1
-    if true_count == len(examples) / 2:
-        decision = random.Random().randint(0, 1)
-    else:
-        decision = 1 if true_count > len(examples / 2) else 0
-    return Node(decision, "")
-
-
 ds = Dataset(filepath="tables/restaurant.csv", decision="WillWait")
 tree = dt_learning(ds.items, ds.get_attributes(), ds.items, True)
 tree.sort()
-print(tree)
 TreePlot().plot(tree, goal=ds.decision)

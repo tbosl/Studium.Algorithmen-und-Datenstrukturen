@@ -12,7 +12,7 @@ def p_goal_with_attribute(attribute, examples, value):
     matches = [e for e in examples if e.attributes[attribute] == value]
     positives = 0
     for m in matches:
-        if m.decision in positive_results:
+        if m.classification in positive_results:
             positives += 1
     return positives / len(matches)
 
@@ -41,7 +41,7 @@ def goal_possibilities(A, examples):
     for e in examples:
         if A in e.attributes:
             count += 1
-            if e.decision in positive_results:
+            if e.classification in positive_results:
                 count_pos += 1
     return count_pos / count
 
