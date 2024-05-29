@@ -1,8 +1,9 @@
 from random import Random
 
-from problems.bonusproblem.DataModel import Dataset, check_if_all_examples_have_same_classification
+from problems.bonusproblem.DataModel import Dataset
 from problems.bonusproblem.Node import Node
-from problems.bonusproblem.entropy import most_important_attribute, unique_values, positive_results
+from problems.bonusproblem.entropy import most_important_attribute, positive_results
+from util import unique_values, check_if_all_examples_have_same_classification
 from problems.bonusproblem.treeplot import TreePlot
 
 
@@ -29,11 +30,7 @@ def dt_learning(examples: list, attributes, parent_examples, start=False):
         A = most_important_attribute(examples, attributes)[0]
         reason = A if not start else "root"
         my_tree = Node(A, reason)
-        values = []
-        for e in examples:
-            values.append(e.attributes[A])
-        uv = unique_values(A, examples)
-        for v in uv:
+        for v in unique_values(A, examples):
             exs = [e for e in examples if e.attributes[A] == v]
             subtree = dt_learning(exs, [a for a in attributes if a != A], examples)
             if subtree:
@@ -42,7 +39,7 @@ def dt_learning(examples: list, attributes, parent_examples, start=False):
     return my_tree
 
 
-ds = Dataset(filepath="tables/restaurant.csv", decision="WillWait")
+ds = Dataset(filepath="tables/attack.csv", decision="Attack")
 tree = dt_learning(ds.items, ds.get_attributes(), ds.items, True)
 tree.sort()
 TreePlot().plot(tree, goal=ds.decision)
