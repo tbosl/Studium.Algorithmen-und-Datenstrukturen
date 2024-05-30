@@ -8,14 +8,11 @@ from problems.bonusproblem.treeplot import TreePlot
 
 
 def plurality_val(examples):
-    true_count = 0
-    for e in examples:
-        if e.classification in positive_results:
-            true_count += 1
+    true_count = len([e for e in examples if e.classification in positive_results])
     if true_count == len(examples) / 2:
         decision = Random().randint(0, 1)
     else:
-        decision = 1 if true_count > len(examples / 2) else 0
+        decision = ds.positive_classification() if true_count > len(examples) / 2 else ds.negative_classification()
     return Node(decision, "")
 
 
@@ -39,7 +36,7 @@ def dt_learning(examples: list, attributes, parent_examples, start=False):
     return my_tree
 
 
-ds = Dataset(filepath="tables/attack.csv", decision="Attack")
+ds = Dataset(filepath="tables/example.csv", decision="PlayTennis")
 tree = dt_learning(ds.items, ds.get_attributes(), ds.items, True)
 tree.sort()
 TreePlot().plot(tree, goal=ds.decision)

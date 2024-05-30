@@ -2,7 +2,7 @@ import math
 
 from problems.bonusproblem.util import unique_values
 
-positive_results = [True, 1, "T", "True", "t", "true", "TRUE"]
+positive_results = [True, 1, "T", "True", "t", "true", "TRUE", "yes", "Yes", "YES", "y", "Y", "1"]
 
 
 def __p_goal_with_attribute(attribute, examples, value):
