@@ -1,20 +1,27 @@
 class Node:
+    """A node in a decision tree."""
+
     def __init__(self, data, reason):
+        """Initializes a node with the given data and reason."""
         self.children = []
         self.data = data
         self.reason = reason
 
     def insert(self, subtree):
+        """Inserts a subtree as a child of this node."""
         self.children.append(subtree)
 
     @staticmethod
     def __sort_by_keys(atc):
+        """Returns a sorted dictionary based on the keys of the given dictionary."""
         return {k: atc[k] for k in sorted((atc.keys()))}
 
     def __value_from_reason(self):
+        """Returns the value of the attribute based on the reason of this node."""
         return self.reason[self.reason.index(":") + 1:].strip()
 
     def sort(self):
+        """Sorts the children of this node."""
         values_to_children = {c.__value_from_reason(): c for c in self.children}
         ordered_values = self.__sort_by_keys(values_to_children)
         self.children = list(ordered_values.values())

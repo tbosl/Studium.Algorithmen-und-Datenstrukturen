@@ -2,12 +2,13 @@ from random import Random
 
 from problems.bonusproblem.DataModel import Dataset
 from problems.bonusproblem.Node import Node
-from problems.bonusproblem.entropy import most_important_attribute, positive_results
+from problems.bonusproblem.information_gain_calculations import most_important_attribute, positive_results
 from util import unique_values, check_if_all_examples_have_same_classification
 from problems.bonusproblem.treeplot import TreePlot
 
 
 def plurality_val(examples):
+    """Returns the most common classification in the examples. If there is a tie, a random decision is made."""
     true_count = len([e for e in examples if e.classification in positive_results])
     if true_count == len(examples) / 2:
         decision = Random().randint(0, 1)
@@ -17,6 +18,7 @@ def plurality_val(examples):
 
 
 def dt_learning(examples: list, attributes, parent_examples, start=False):
+    """Returns a decision tree based on the examples and attributes."""
     if not examples:
         return plurality_val(parent_examples)
     elif check_if_all_examples_have_same_classification(examples):
