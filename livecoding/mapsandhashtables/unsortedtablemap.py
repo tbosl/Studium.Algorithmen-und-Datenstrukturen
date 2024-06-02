@@ -1,4 +1,4 @@
-from livecoding.mapsandhashtables.map import MapBase
+from livecoding.mapsandhashtables.mapbase import MapBase
 
 
 class UnsortedTableMap(MapBase):
