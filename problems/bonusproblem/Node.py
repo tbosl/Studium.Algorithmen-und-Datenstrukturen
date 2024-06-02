@@ -8,7 +8,7 @@ class Node:
         self.reason = reason
 
     def insert(self, subtree):
-        """Inserts a subtree as a child of this node."""
+        """Adds the provided subtree to the children list of the node."""
         self.children.append(subtree)
 
     @staticmethod
@@ -17,7 +17,8 @@ class Node:
         return {k: atc[k] for k in sorted((atc.keys()))}
 
     def __value_from_reason(self):
-        """Returns the value of the attribute based on the reason of this node."""
+        """The value of the most important attribute of
+           the parent used by the root of this subtree."""
         return self.reason[self.reason.index(":") + 1:].strip()
 
     def sort(self):

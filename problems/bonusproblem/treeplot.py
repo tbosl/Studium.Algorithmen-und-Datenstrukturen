@@ -4,7 +4,8 @@ from problems.bonusproblem.Node import Node
 
 
 def calculate_maximum_offset_for_both_sides(level, original):
-    """Returns the maximum offset for both sides based on the level and the original offset."""
+    """The function will provide the maximum offset of both tree sides
+     based on the current level and the original offset."""
     if level == 0:
         return original / (level + 0.8)
     else:
@@ -12,8 +13,9 @@ def calculate_maximum_offset_for_both_sides(level, original):
 
 
 def calculate_new_x(i, subtrees, parent_x, level):
-    """Returns the new x coordinate based on the index, the number of subtrees,
-    the parent x coordinate and the level."""
+    """Use this function to determine the currently selected
+      child's x position based on the index, the number of
+      subtrees, the parent x coordinate and the level."""
     if subtrees % 2 == 1 and subtrees // 2 == i:
         return parent_x
     children_per_side = subtrees // 2

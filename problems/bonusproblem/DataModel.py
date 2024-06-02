@@ -8,8 +8,8 @@ class DataItem:
     """A class representing a data item."""
 
     def __init__(self, classification, attributes):
-        """Initializes the data item with the given classification and attributes.
-         Attributes is a dictionary of attribute names to the value in the item"""
+        """Initialize a new data item using the classification provided and its associated attributes.
+           Attributes is a dictionary of attribute names to the value in the item"""
         self.classification = classification
         self.attributes = attributes
 
@@ -31,7 +31,7 @@ class Dataset:
         return [key for key in self.items[0].attributes]
 
     def positive_classification(self):
-        """Returns the presentation of a positive classification in the dataset."""
+        """The dataset's positive classification representation."""
         if self.positive:
             return self.positive
         for i in self.items:
@@ -40,7 +40,7 @@ class Dataset:
                 return self.positive
 
     def negative_classification(self):
-        """Returns the presentation of a negative classification in the dataset."""
+        """The dataset's negative classification representation."""
         if self.negative:
             return self.negative
 

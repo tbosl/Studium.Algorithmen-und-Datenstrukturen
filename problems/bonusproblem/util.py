@@ -1,5 +1,6 @@
 def unique_values(A, examples):
-    """Returns the unique values of the attribute A in the examples."""
+    """Creates the set of unique values of a selected attribute
+       in the example data set of the attribute A in the examples."""
     return set([e.attributes[A] for e in examples])
 
 
