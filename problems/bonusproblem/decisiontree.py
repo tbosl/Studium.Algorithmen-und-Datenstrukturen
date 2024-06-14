@@ -38,7 +38,7 @@ def dt_learning(examples: list, attributes, parent_examples, start=False):
     return my_tree
 
 
-ds = Dataset(filepath="tables/attack.csv", decision="Attack")
+ds = Dataset(filepath="tables/attack2.csv", decision="Attack")
 tree = dt_learning(ds.items, ds.get_attributes(), ds.items, True)
 tree.sort()
 TreePlot().plot(tree, goal=ds.decision)

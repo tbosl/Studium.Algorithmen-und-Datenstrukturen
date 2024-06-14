@@ -1,0 +1,6 @@
+Sky,Air,Humid,Wind,Water,forecast,Attack
+sunny,warm,normal,strong,warm,same,T
+sunny,warm,high,strong,warm,same,T
+rainy,cold,high,strong,warm,change,F
+sunny,warm,high,strong,cool,change,T
+sunny,warm,normal,weak,warm,same,F
